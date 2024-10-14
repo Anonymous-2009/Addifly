@@ -12,7 +12,7 @@ import {
 import FeatureCard from './components/FeatureCard';
 import TestimonialCard from './components/TestimonialCard';
 
-const AddflyLandingPage: React.FC = () => {
+const App: React.FC = () => {
   return (
     <div className="bg-black min-h-screen text-white">
       <main className="container mx-auto px-4 py-16">
@@ -161,4 +161,4 @@ const AddflyLandingPage: React.FC = () => {
   );
 };
 
-export default AddflyLandingPage;
+export default App;
