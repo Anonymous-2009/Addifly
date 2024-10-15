@@ -58,7 +58,7 @@ const Navbar = () => {
               whileTap={{ scale: 0.95 }}
             >
               <User size={18} />
-              <span>Sign In</span>
+              <span>Sign Up</span>
             </motion.button>
           </div>
 
