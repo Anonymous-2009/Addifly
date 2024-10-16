@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, User } from 'lucide-react';
 import logo from '../assets/image/logo.svg';
+import { Link } from 'react-router-dom';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -21,7 +22,7 @@ const Navbar = () => {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
-          <div className="flex items-center">
+          <Link to="/" className="flex items-center">
             <motion.div
               className="flex-shrink-0 flex items-center"
               whileHover={{ scale: 1.05 }}
@@ -32,7 +33,7 @@ const Navbar = () => {
                 Addifly
               </span>
             </motion.div>
-          </div>
+          </Link>
 
           <div className="hidden md:flex items-center space-x-4">
             {menuItems.map((item) => (
@@ -51,7 +52,7 @@ const Navbar = () => {
             ))}
           </div>
 
-          <div className="flex items-center">
+          <Link to="/signup" className="flex items-center">
             <motion.div
               className="bg-blue-500 text-white px-4 py-2 rounded-full flex items-center space-x-2 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 cursor-pointer"
               whileHover={{ scale: 1.05 }}
@@ -60,7 +61,7 @@ const Navbar = () => {
               <User size={18} />
               <span>Sign Up</span>
             </motion.div>
-          </div>
+          </Link>
 
           <div className="md:hidden flex items-center">
             <button
