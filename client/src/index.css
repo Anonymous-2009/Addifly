@@ -1,3 +1,17 @@
 @tailwind base;
 @tailwind components;
-@tailwind utilities;
+@tailwind utilities; 
+
+@font-face {
+    font-family: 'MyCustomFont';
+    src: url('./assets/fonts/Geist-Medium.woff2') format('woff2'),
+         url('./assets/fonts/Geist-Regular.woff2') format('woff2');
+    font-weight: 100;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  body {
+    @apply font-custom;
+  }
+  
