@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, User } from 'lucide-react';
-import logo from '../assets/logo.svg';
+import logo from '../assets/image/logo.svg';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -52,14 +52,14 @@ const Navbar = () => {
           </div>
 
           <div className="flex items-center">
-            <motion.button
-              className="bg-blue-500 text-white px-4 py-2 rounded-full flex items-center space-x-2 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+            <motion.div
+              className="bg-blue-500 text-white px-4 py-2 rounded-full flex items-center space-x-2 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 cursor-pointer"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
               <User size={18} />
               <span>Sign Up</span>
-            </motion.button>
+            </motion.div>
           </div>
 
           <div className="md:hidden flex items-center">
@@ -84,9 +84,8 @@ const Navbar = () => {
           >
             <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
               {menuItems.map((item) => (
-                <motion.a
+                <motion.div
                   key={item}
-                  href="#"
                   className="text-gray-200 hover:bg-blue-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
                   whileHover={{
                     scale: 1.05,
@@ -95,7 +94,7 @@ const Navbar = () => {
                   whileTap={{ scale: 0.95 }}
                 >
                   {item}
-                </motion.a>
+                </motion.div>
               ))}
             </div>
           </motion.div>
