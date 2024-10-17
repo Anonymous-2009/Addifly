@@ -17,12 +17,16 @@ authRouter.post('/login', checkIfLoggedIn, async (req, res) => {
 });
 
 // Route for user logout
-authRouter.post('/logout', async (req, res) => {
-  await authController.logout(req, res);
+authRouter.post('/logout', (req, res) => {
+  authController.logout(req, res);
 });
 
 authRouter.post('/verify', async (req, res) => {
   await authController.verifyOTP(req, res);
+});
+
+authRouter.post('/check', (req, res) => {
+  authController.checkStatus(req, res);
 });
 
 export { authRouter };

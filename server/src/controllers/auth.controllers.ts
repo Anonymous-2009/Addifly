@@ -50,6 +50,17 @@ export class AuthController {
     }
   }
 
+  checkStatus(req: Request, res: Response) {
+    const token = req.cookies?.token;
+    if (token) {
+      return res.status(200).json({ message: 'user is login', isLogin: true });
+    } else {
+      return res
+        .status(400)
+        .json({ message: 'user is not login', isLogin: false });
+    }
+  }
+
   logout(req: Request, res: Response) {
     res.clearCookie('token');
     return res.status(200).json({ message: 'Logged out from our system' });
