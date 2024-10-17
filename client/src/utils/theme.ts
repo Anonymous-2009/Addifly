@@ -1,7 +1,7 @@
 export const customToastOptions = {
   // Success Toast
   success: {
-    duration: 5000, // 3 seconds duration
+    duration: 5000, // 5 seconds duration
     style: {
       background: '#1E1E2A', // Dark background
       color: '#FFFFFF', // White text color
@@ -18,7 +18,7 @@ export const customToastOptions = {
   },
   // Error Toast
   error: {
-    duration: 2500, // 3 seconds duration
+    duration: 2500, // 2.5 seconds duration
     style: {
       background: '#1E1E2A', // Dark background
       color: '#FFFFFF', // White text color
@@ -32,5 +32,10 @@ export const customToastOptions = {
       primary: '#FF4B4B', // Icon color (red)
       secondary: '#1E1E2A', // Icon background (dark)
     },
+  },
+  transition: {
+    // Add the custom transition effects here
+    enter: 'transform 0.3s ease, opacity 0.2s ease', // Enter with transform and opacity
+    exit: 'transform 0.2s ease, opacity 0.15s ease', // Exit with transform and opacity
   },
 };
