@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-
+import toast from 'react-hot-toast';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   Mail,
@@ -15,6 +15,8 @@ import {
 import Spinner from '../assets/image/spinner.svg';
 import { LoginFormData, LoginSchema } from '../validation';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const inputVariants = {
   focus: {
@@ -40,13 +42,37 @@ const Login = () => {
     resolver: yupResolver(LoginSchema),
   });
 
+  const navigate = useNavigate();
+
   const onSubmit = async (data: LoginFormData) => {
-    setIsSubmitting(true);
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 2000));
-    console.log(data);
-    setIsSubmitting(false);
-    setLoginSuccess(true);
+    try {
+      setIsSubmitting(true);
+      const response = await axios.post('/auth/login', data);
+      const { message } = response.data;
+      toast.success(message);
+      setLoginSuccess(true);
+
+      // Delay the navigation by 2 seconds (2000ms)
+      setTimeout(() => {
+        navigate('/verify');
+      }, 2000);
+    } catch (error: any) {
+      // toast.error('Login failed. Please try again.');
+      if (error.response) {
+        // Access the response data for 4xx or 5xx status codes
+        const { message } = error.response.data;
+        // console.error('Error Response:', error.response);
+
+        // Display the error message returned by the server (e.g., "User not found")
+        toast.error(message || 'An error occurred. Please try again.');
+      } else {
+        // If the error is something else (like network issues)
+        console.error('Unexpected Error:', error);
+        toast.error('Something went wrong. Please try again later.');
+      }
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const togglePasswordVisibility = () => {

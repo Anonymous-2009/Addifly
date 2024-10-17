@@ -10,7 +10,7 @@ const app: Application = express();
 
 // cors for react to use this api in future
 const corsOptions = {
-  origin: process.env.CLIENT_URL || 'http://localhost:5173',
+  origin: process.env.CLIENT_URL || 'http://localhost:5173/',
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
 };

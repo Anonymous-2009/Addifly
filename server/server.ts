@@ -5,8 +5,7 @@ import cluster from 'node:cluster';
 import { availableParallelism } from 'node:os';
 
 const PORT = process.env.PORT || 3000;
-// const cpus = availableParallelism();
-const cpus = 5; // only 5 cpus for dev and use lots no of cpu
+const cpus = availableParallelism();
 
 const startServer = async () => {
   if (cluster.isPrimary) {
@@ -14,7 +13,7 @@ const startServer = async () => {
     console.log(`Setting up ${cpus} workers...`);
 
     // Fork workers
-    for (let i = 0; i < cpus; i++) {
+    for (let i = 0; i < 5; i++) {
       cluster.fork();
     }
 

@@ -3,23 +3,53 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, User, LogOut } from 'lucide-react';
 import logo from '../assets/image/logo.svg';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
+import toast from 'react-hot-toast';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [isLogin, setIsLogin] = useState(false)
+  const [isLogin, setIsLogin] = useState(false);
 
   useEffect(() => {
     const toggleLogin = async () => {
-      await new Promise((resolve) => setTimeout(resolve, 3000));
-      setIsLogin(true)
-    }
-   toggleLogin()
-  }, [])
+      try {
+        const response = await axios.post('/auth/check');
+        const { isLogin } = response.data;
+        setIsLogin(isLogin);
+        // toast.success(message);
+      } catch (error: any) {
+        if (!error.response) {
+          // If the error is something else (like network issues)
+          console.error('Unexpected Error:', error);
+          toast.error('Something went wrong. Please try again later.');
+        }
+      }
+    };
+    toggleLogin();
+  }, []);
 
   const handleLogout = async () => {
-    // use a api call for logout 
-       setIsLogin(false)
-  }
+    // use a api call for logout
+    try {
+      const response = await axios.post('/auth/logout');
+      const { message, isLogin } = response.data;
+      setIsLogin(isLogin);
+      toast.success(message);
+    } catch (error: any) {
+      if (error.response) {
+        // Access the response data for 4xx or 5xx status codes
+        const { message } = error.response.data;
+        // console.error('Error Response:', error.response);
+
+        // Display the error message returned by the server (e.g., "User not found")
+        toast.error(message || 'An error occurred. Please try again.');
+      } else {
+        // If the error is something else (like network issues)
+        console.error('Unexpected Error:', error);
+        toast.error('Something went wrong. Please try again later.');
+      }
+    }
+  };
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -67,29 +97,28 @@ const Navbar = () => {
           </div>
 
           {isLogin ? (
-             <div className="flex items-center" onClick={handleLogout}>
-             <motion.div
-              className="bg-blue-500 text-white px-4 py-2 rounded-full flex items-center space-x-2 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 cursor-pointer"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <LogOut size={18} />
-               <span> Logout </span>
-             </motion.div>
-             </div> 
+            <div className="flex items-center" onClick={handleLogout}>
+              <motion.div
+                className="bg-blue-500 text-white px-4 py-2 rounded-full flex items-center space-x-2 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 cursor-pointer"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <LogOut size={18} />
+                <span> Logout </span>
+              </motion.div>
+            </div>
           ) : (
             <Link to="/signup" className="flex items-center">
-             <motion.div
-              className="bg-blue-500 text-white px-4 py-2 rounded-full flex items-center space-x-2 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 cursor-pointer"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <User size={18} />
-               <span>Sign Up</span>
-             </motion.div>
-             </Link> 
+              <motion.div
+                className="bg-blue-500 text-white px-4 py-2 rounded-full flex items-center space-x-2 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 cursor-pointer"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <User size={18} />
+                <span>Sign Up</span>
+              </motion.div>
+            </Link>
           )}
- 
 
           <div className="md:hidden flex items-center">
             <button

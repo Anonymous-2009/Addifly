@@ -14,7 +14,9 @@ import {
 } from 'lucide-react';
 import Spinner from '../assets/image/spinner.svg';
 import { SignUpSchema, SignFormData } from '../validation';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import toast from 'react-hot-toast';
 
 const inputVariants = {
   focus: {
@@ -32,6 +34,8 @@ const SignUp = () => {
   const [submitSuccess, setSubmitSuccess] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
+  const navigate = useNavigate();
+
   const {
     register,
     handleSubmit,
@@ -41,12 +45,36 @@ const SignUp = () => {
   });
 
   const onSubmit = async (data: SignFormData) => {
-    setIsSubmitting(true);
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 2000));
-    console.log(data);
-    setIsSubmitting(false);
-    setSubmitSuccess(true);
+    try {
+      setIsSubmitting(true);
+      // Simulate API call
+      const response = await axios.post('/auth/signup', data);
+      const { message } = response.data;
+
+      toast.success(message);
+
+      setSubmitSuccess(true);
+
+      // Delay the navigation by 2 seconds (2000ms)
+      setTimeout(() => {
+        navigate('/verify');
+      }, 2000);
+    } catch (error: any) {
+      if (error.response) {
+        // Access the response data for 4xx or 5xx status codes
+        const { message } = error.response.data;
+        // console.error('Error Response:', error.response);
+
+        // Display the error message returned by the server (e.g., "User not found")
+        toast.error(message || 'An error occurred. Please try again.');
+      } else {
+        // If the error is something else (like network issues)
+        console.error('Unexpected Error:', error);
+        toast.error('Something went wrong. Please try again later.');
+      }
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const togglePasswordVisibility = () => {
@@ -168,7 +196,7 @@ const SignUp = () => {
               >
                 <input
                   id="password"
-                  type="password"
+                  type={showPassword ? 'text' : 'password'}
                   {...register('password')}
                   className="appearance-none rounded-md relative block w-full px-3 py-2 pl-10 border border-gray-700 bg-gray-800 placeholder-gray-500 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm md:text-base transition-all duration-200"
                   placeholder="Enter your password"

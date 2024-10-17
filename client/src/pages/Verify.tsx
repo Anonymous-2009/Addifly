@@ -5,6 +5,9 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Mail, Key, AlertCircle, CheckCircle, ArrowRight } from 'lucide-react';
 import Spinner from '../assets/image/spinner.svg';
 import { VerifySchema, VerifyFormData } from '../validation';
+import axios from 'axios';
+import toast from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
 
 const inputVariants = {
   focus: {
@@ -29,13 +32,37 @@ const Verify = () => {
     resolver: yupResolver(VerifySchema),
   });
 
+  const navigate = useNavigate();
+
   const onSubmit = async (data: VerifyFormData) => {
-    setIsSubmitting(true);
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 2000));
-    console.log(data);
-    setIsSubmitting(false);
-    setVerificationSuccess(true);
+    try {
+      setIsSubmitting(true);
+      const response = await axios.post('/auth/verify', data);
+      const { message } = response.data;
+      toast.success(message);
+
+      setVerificationSuccess(true);
+
+      setTimeout(() => {
+        navigate('/');
+        navigate(0);
+      }, 2500);
+    } catch (error: any) {
+      if (error.response) {
+        // Access the response data for 4xx or 5xx status codes
+        const { message } = error.response.data;
+        // console.error('Error Response:', error.response);
+
+        // Display the error message returned by the server (e.g., "User not found")
+        toast.error(message || 'An error occurred. Please try again.');
+      } else {
+        // If the error is something else (like network issues)
+        console.error('Unexpected Error:', error);
+        toast.error('Something went wrong. Please try again later.');
+      }
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
