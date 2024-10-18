@@ -5,6 +5,7 @@ import Signup from '../pages/SignUp';
 import Login from '../pages/Login';
 import Verify from '../pages/Verify';
 import App from '../App';
+import Get from '../pages/Get';
 
 export const router = createBrowserRouter([
   {
@@ -27,6 +28,10 @@ export const router = createBrowserRouter([
       {
         path: 'verify',
         element: <Verify />,
+      },
+      {
+        path: 'getall',
+        element: <Get />,
       },
     ],
   },

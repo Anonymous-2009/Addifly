@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Mail } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const Footer: React.FC = () => {
   const linkVariants = {
@@ -33,9 +34,9 @@ const Footer: React.FC = () => {
                   variants={linkVariants}
                   whileHover="hover"
                 >
-                  <a href="#" className="text-gray-400 hover:text-blue-500">
+                  <Link to="/" className="text-gray-400 hover:text-blue-500">
                     {link}
-                  </a>
+                  </Link>
                 </motion.li>
               )
             )}

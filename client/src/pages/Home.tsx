@@ -11,8 +11,10 @@ import {
 } from 'lucide-react';
 import FeatureCard from '../components/FeatureCard';
 import TestimonialCard from '../components/TestimonialCard';
+import { useNavigate } from 'react-router-dom';
 
 const Home: React.FC = () => {
+  const navigate = useNavigate();
   return (
     <div className="bg-black min-h-screen text-white">
       <main className="container mx-auto px-4 py-16">
@@ -38,6 +40,7 @@ const Home: React.FC = () => {
             className="bg-white text-black px-8 py-4 rounded-full font-semibold text-lg flex items-center justify-center mx-auto hover:bg-blue-500 hover:text-white transition duration-300"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
+            onClick={() => navigate('/getall')}
           >
             Get Started <ArrowRight className="ml-2" />
           </motion.button>

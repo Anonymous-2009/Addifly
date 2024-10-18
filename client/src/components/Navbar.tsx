@@ -16,10 +16,8 @@ const Navbar = () => {
         const response = await axios.post('/auth/check');
         const { isLogin } = response.data;
         setIsLogin(isLogin);
-        // toast.success(message);
       } catch (error: any) {
         if (!error.response) {
-          // If the error is something else (like network issues)
           console.error('Unexpected Error:', error);
           toast.error('Something went wrong. Please try again later.');
         }
@@ -29,7 +27,6 @@ const Navbar = () => {
   }, []);
 
   const handleLogout = async () => {
-    // use a api call for logout
     try {
       const response = await axios.post('/auth/logout');
       const { message, isLogin } = response.data;
@@ -37,14 +34,9 @@ const Navbar = () => {
       toast.success(message);
     } catch (error: any) {
       if (error.response) {
-        // Access the response data for 4xx or 5xx status codes
         const { message } = error.response.data;
-        // console.error('Error Response:', error.response);
-
-        // Display the error message returned by the server (e.g., "User not found")
         toast.error(message || 'An error occurred. Please try again.');
       } else {
-        // If the error is something else (like network issues)
         console.error('Unexpected Error:', error);
         toast.error('Something went wrong. Please try again later.');
       }
@@ -55,7 +47,13 @@ const Navbar = () => {
     setIsOpen(!isOpen);
   };
 
-  const menuItems = ['GetAll', 'Add', 'Find', 'Update', 'Delete'];
+  const menuItems = [
+    { name: 'GetAll', path: '/getall' },
+    { name: 'Add', path: '/add' },
+    { name: 'Find', path: '/find' },
+    { name: 'Update', path: '/update' },
+    { name: 'Delete', path: '/delete' },
+  ];
 
   return (
     <motion.nav
@@ -81,18 +79,18 @@ const Navbar = () => {
 
           <div className="hidden md:flex items-center space-x-4">
             {menuItems.map((item) => (
-              <motion.a
-                key={item}
-                href="#"
-                className="text-gray-200 hover:bg-blue-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-                whileHover={{
-                  scale: 1.05,
-                  backgroundColor: 'rgba(59, 130, 246, 0.5)',
-                }}
-                whileTap={{ scale: 0.95 }}
-              >
-                {item}
-              </motion.a>
+              <Link to={item.path} key={item.name}>
+                <motion.span
+                  className="text-gray-200 hover:bg-blue-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                  whileHover={{
+                    scale: 1.05,
+                    backgroundColor: 'rgba(59, 130, 246, 0.5)',
+                  }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  {item.name}
+                </motion.span>
+              </Link>
             ))}
           </div>
 
@@ -142,17 +140,18 @@ const Navbar = () => {
           >
             <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
               {menuItems.map((item) => (
-                <motion.div
-                  key={item}
-                  className="text-gray-200 hover:bg-blue-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
-                  whileHover={{
-                    scale: 1.05,
-                    backgroundColor: 'rgba(59, 130, 246, 0.5)',
-                  }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  {item}
-                </motion.div>
+                <Link to={item.path} key={item.name}>
+                  <motion.div
+                    className="text-gray-200 hover:bg-blue-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+                    whileHover={{
+                      scale: 1.05,
+                      backgroundColor: 'rgba(59, 130, 246, 0.5)',
+                    }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    {item.name}
+                  </motion.div>
+                </Link>
               ))}
             </div>
           </motion.div>

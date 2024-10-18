@@ -7,12 +7,16 @@ import { ErrorBoundary } from 'react-error-boundary';
 import ErrorFallback from './pages/Error';
 import { Toaster } from 'react-hot-toast';
 import { customToastOptions } from './utils/theme';
+import { Provider } from 'react-redux';
+import { store } from './app/store';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <ErrorBoundary FallbackComponent={ErrorFallback}>
-      <RouterProvider router={router} />
-      <Toaster toastOptions={customToastOptions} />
+      <Provider store={store}>
+        <RouterProvider router={router} />
+        <Toaster toastOptions={customToastOptions} />
+      </Provider>
     </ErrorBoundary>
   </StrictMode>
 );

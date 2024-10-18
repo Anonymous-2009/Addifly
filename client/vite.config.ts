@@ -11,6 +11,11 @@ export default defineConfig({
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/auth/, '/auth'),
       },
+      '/crud': {
+        target: 'http://localhost:3000', // Your backend server
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/crud/, '/crud'),
+      },
     },
   },
 });
