@@ -12,8 +12,8 @@ import {
   Eye,
   EyeOff,
 } from 'lucide-react';
-import Spinner from '../assets/image/spinner.svg';
-import { LoginFormData, LoginSchema } from '../validation';
+import Spinner from '../../assets/image/spinner.svg';
+import { LoginFormData, LoginSchema } from '../../validation';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';

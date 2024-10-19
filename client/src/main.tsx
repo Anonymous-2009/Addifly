@@ -6,7 +6,7 @@ import './index.css';
 import { ErrorBoundary } from 'react-error-boundary';
 import ErrorFallback from './pages/Error';
 import { Toaster } from 'react-hot-toast';
-import { customToastOptions } from './utils/theme';
+import { customToastOptions } from './utils/theme/toastTheme';
 import { Provider } from 'react-redux';
 import { store } from './app/store';
 

@@ -33,6 +33,8 @@ export const customToastOptions = {
       secondary: '#1E1E2A', // Icon background (dark)
     },
   },
+
+  // Transition settings
   transition: {
     // Add the custom transition effects here
     enter: 'transform 0.3s ease, opacity 0.2s ease', // Enter with transform and opacity

@@ -2,21 +2,12 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { motion, AnimatePresence } from 'framer-motion';
-import {
-  User,
-  Mail,
-  Lock,
-  AlertCircle,
-  CheckCircle,
-  ArrowRight,
-  Eye,
-  EyeOff,
-} from 'lucide-react';
-import Spinner from '../assets/image/spinner.svg';
-import { SignUpSchema, SignFormData } from '../validation';
-import { Link, useNavigate } from 'react-router-dom';
+import { Mail, Key, AlertCircle, CheckCircle, ArrowRight } from 'lucide-react';
+import Spinner from '../../assets/image/spinner.svg';
+import { VerifySchema, VerifyFormData } from '../../validation';
 import axios from 'axios';
 import toast from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
 
 const inputVariants = {
   focus: {
@@ -29,36 +20,33 @@ const inputVariants = {
   },
 };
 
-const SignUp = () => {
+const Verify = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitSuccess, setSubmitSuccess] = useState(false);
-  const [showPassword, setShowPassword] = useState(false);
-
-  const navigate = useNavigate();
+  const [verificationSuccess, setVerificationSuccess] = useState(false);
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<SignFormData>({
-    resolver: yupResolver(SignUpSchema),
+  } = useForm<VerifyFormData>({
+    resolver: yupResolver(VerifySchema),
   });
 
-  const onSubmit = async (data: SignFormData) => {
+  const navigate = useNavigate();
+
+  const onSubmit = async (data: VerifyFormData) => {
     try {
       setIsSubmitting(true);
-      // Simulate API call
-      const response = await axios.post('/auth/signup', data);
+      const response = await axios.post('/auth/verify', data);
       const { message } = response.data;
-
       toast.success(message);
 
-      setSubmitSuccess(true);
+      setVerificationSuccess(true);
 
-      // Delay the navigation by 2 seconds (2000ms)
       setTimeout(() => {
-        navigate('/verify');
-      }, 2000);
+        navigate('/');
+        navigate(0);
+      }, 2500);
     } catch (error: any) {
       if (error.response) {
         // Access the response data for 4xx or 5xx status codes
@@ -77,10 +65,6 @@ const SignUp = () => {
     }
   };
 
-  const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword);
-  };
-
   return (
     <div className="min-h-screen flex items-center justify-center bg-black px-4 sm:px-6 lg:px-8">
       <motion.div
@@ -91,53 +75,14 @@ const SignUp = () => {
       >
         <div>
           <h2 className="mt-6 text-center text-3xl sm:text-4xl md:text-5xl font-extrabold text-white">
-            Welcome to <span className="text-blue-500">Addifly</span>
+            Verify your <span className="text-blue-500">Addifly</span> account
           </h2>
           <p className="mt-2 text-center text-sm sm:text-base md:text-lg text-gray-400">
-            Create your account and start your journey
+            Enter your email and the OTP sent to you
           </p>
         </div>
         <form className="mt-8 space-y-6" onSubmit={handleSubmit(onSubmit)}>
           <div className="rounded-md shadow-sm space-y-6 sm:space-y-8">
-            <div className="relative">
-              <label
-                htmlFor="username"
-                className="block text-sm sm:text-base font-medium text-gray-400 mb-1"
-              >
-                Username
-              </label>
-              <User
-                className="absolute top-10 left-3 text-blue-500 z-10"
-                size={21}
-              />
-              <motion.div
-                variants={inputVariants}
-                whileFocus="focus"
-                initial="blur"
-                animate="blur"
-              >
-                <input
-                  id="username"
-                  type="text"
-                  {...register('username')}
-                  className="appearance-none rounded-md relative block w-full px-3 py-2 pl-10 border border-gray-700 bg-gray-800 placeholder-gray-500 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm md:text-base transition-all duration-200"
-                  placeholder="Enter your username"
-                />
-              </motion.div>
-              <AnimatePresence>
-                {errors.username && (
-                  <motion.div
-                    initial={{ opacity: 0, y: -10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -10 }}
-                    className="text-red-500 text-xs sm:text-sm mt-1 flex items-center"
-                  >
-                    <AlertCircle size={14} className="mr-1" />
-                    {errors.username.message}
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </div>
             <div className="relative">
               <label
                 htmlFor="email-address"
@@ -179,12 +124,12 @@ const SignUp = () => {
             </div>
             <div className="relative">
               <label
-                htmlFor="password"
+                htmlFor="otp"
                 className="block text-sm sm:text-base font-medium text-gray-400 mb-1"
               >
-                Password
+                One-Time Password (OTP)
               </label>
-              <Lock
+              <Key
                 className="absolute top-10 left-3 text-blue-500 z-10"
                 size={21}
               />
@@ -195,29 +140,15 @@ const SignUp = () => {
                 animate="blur"
               >
                 <input
-                  id="password"
-                  type={showPassword ? 'text' : 'password'}
-                  {...register('password')}
+                  id="otp"
+                  type="text"
+                  {...register('otp')}
                   className="appearance-none rounded-md relative block w-full px-3 py-2 pl-10 border border-gray-700 bg-gray-800 placeholder-gray-500 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm md:text-base transition-all duration-200"
-                  placeholder="Enter your password"
+                  placeholder="Enter the 6-digit OTP"
                 />
-                <button
-                  type="button"
-                  onClick={togglePasswordVisibility}
-                  className="absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5"
-                >
-                  {showPassword ? (
-                    <EyeOff
-                      className="h-5 w-5 text-gray-400"
-                      aria-hidden="true"
-                    />
-                  ) : (
-                    <Eye className="h-5 w-5 text-gray-400" aria-hidden="true" />
-                  )}
-                </button>
               </motion.div>
               <AnimatePresence>
-                {errors.password && (
+                {errors.otp && (
                   <motion.div
                     initial={{ opacity: 0, y: -10 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -225,7 +156,7 @@ const SignUp = () => {
                     className="text-red-500 text-xs sm:text-sm mt-1 flex items-center"
                   >
                     <AlertCircle size={14} className="mr-1" />
-                    {errors.password.message}
+                    {errors.otp.message}
                   </motion.div>
                 )}
               </AnimatePresence>
@@ -255,25 +186,25 @@ const SignUp = () => {
                   size={20}
                 />
               )}
-              <span>{isSubmitting ? 'Signing up...' : 'Get Started'}</span>
+              <span>{isSubmitting ? 'Verifying...' : 'Verify OTP'}</span>
             </motion.button>
           </div>
         </form>
 
         <div className="mt-6">
           <p className="text-center text-sm sm:text-base text-gray-400">
-            Already have an account?{' '}
-            <Link
-              to="/login"
+            Didn't receive the OTP?{' '}
+            <a
+              href="#"
               className="font-medium text-blue-500 hover:text-blue-400 transition-colors duration-200"
             >
-              Sign in here
-            </Link>
+              Resend OTP
+            </a>
           </p>
         </div>
 
         <AnimatePresence>
-          {submitSuccess && (
+          {verificationSuccess && (
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -281,7 +212,7 @@ const SignUp = () => {
               className="mt-4 text-center text-green-400 flex items-center justify-center text-sm sm:text-base"
             >
               <CheckCircle size={20} className="mr-2" />
-              Sign up successful! Welcome to Addifly!
+              OTP verified successfully! Your account is now active.
             </motion.div>
           )}
         </AnimatePresence>
@@ -290,4 +221,4 @@ const SignUp = () => {
   );
 };
 
-export default SignUp;
+export default Verify;

@@ -10,10 +10,10 @@ import {
   CheckCircle,
 } from 'lucide-react';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { AddFormData, AddSchema } from '../validation';
-import Spinner from '../assets/image/spinner.svg';
+import { AddFormData, AddSchema } from '../../validation';
+import Spinner from '../../assets/image/spinner.svg';
 import toast from 'react-hot-toast';
-import { useAddUserMutation } from '../features/users/usersApiSlice';
+import { useAddUserMutation } from '../../features/users/usersApiSlice';
 
 const Add: React.FC = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);

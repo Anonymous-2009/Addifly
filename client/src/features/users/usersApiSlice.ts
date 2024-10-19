@@ -3,7 +3,11 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { UsersResponse } from '../../utils/types/users.types';
 import { AddFormData } from '../../validation';
-import { AddUserResponse } from '../../utils/types/add.types';
+import {
+  AddUserResponse,
+  DeleteUserResponse,
+  FindUserResponse,
+} from '../../utils/types/crud.types';
 
 export const usersApi = createApi({
   reducerPath: 'usersApi',
@@ -20,7 +24,28 @@ export const usersApi = createApi({
         body: newUser,
       }),
     }),
+    // Delete user mutation (for POST request)
+    deleteUser: builder.mutation<DeleteUserResponse, { name: string }>({
+      query: (userData) => ({
+        url: 'delete', // Assuming your delete route is '/crud/delete'
+        method: 'DELETE', // Assuming it's a POST request
+        body: userData,
+      }),
+    }),
+    // Find user by name mutation
+    findUserByName: builder.mutation<FindUserResponse, { name: string }>({
+      query: (userData) => ({
+        url: 'find', // Assuming your find route is '/crud/find'
+        method: 'POST', // Assuming it's a POST request
+        body: userData,
+      }),
+    }),
   }),
 });
 
-export const { useGetAllUsersQuery, useAddUserMutation } = usersApi;
+export const {
+  useGetAllUsersQuery,
+  useAddUserMutation,
+  useDeleteUserMutation,
+  useFindUserByNameMutation,
+} = usersApi;
