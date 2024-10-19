@@ -6,6 +6,7 @@ import Login from '../pages/Login';
 import Verify from '../pages/Verify';
 import App from '../App';
 import Get from '../pages/Get';
+import Add from '../pages/Add';
 
 export const router = createBrowserRouter([
   {
@@ -32,6 +33,10 @@ export const router = createBrowserRouter([
       {
         path: 'getall',
         element: <Get />,
+      },
+      {
+        path: 'add',
+        element: <Add />,
       },
     ],
   },
