@@ -43,8 +43,14 @@ const FindUser: React.FC = () => {
         toast.success(response.message);
       }
       reset();
-    } catch (error) {
-      toast.error('error');
+    } catch (error: any) {
+      if (error.data?.message) {
+        toast.error(
+          error.data.message || 'An error occurred. Please try again.'
+        );
+      } else {
+        toast.error('Something went wrong. Please try again later.');
+      }
     }
   };
 

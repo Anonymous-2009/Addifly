@@ -2,11 +2,12 @@
 
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { UsersResponse } from '../../utils/types/users.types';
-import { AddFormData } from '../../validation';
+import { AddFormData, UpdateFormData } from '../../validation';
 import {
   AddUserResponse,
   DeleteUserResponse,
   FindUserResponse,
+  UpdateUserResponse,
 } from '../../utils/types/crud.types';
 
 export const usersApi = createApi({
@@ -40,6 +41,14 @@ export const usersApi = createApi({
         body: userData,
       }),
     }),
+    // Update user mutation (new functionality)
+    updateUser: builder.mutation<UpdateUserResponse, UpdateFormData>({
+      query: (updatedUserData) => ({
+        url: 'update', // Assuming your update route is '/crud/update'
+        method: 'PUT',
+        body: updatedUserData,
+      }),
+    }),
   }),
 });
 
@@ -48,4 +57,5 @@ export const {
   useAddUserMutation,
   useDeleteUserMutation,
   useFindUserByNameMutation,
+  useUpdateUserMutation,
 } = usersApi;

@@ -32,3 +32,10 @@ export interface User {
   createdAt: string;
   salary: number;
 }
+
+export interface UpdateUserResponse {
+  message: string;
+  user: {
+    count: number;
+  };
+}

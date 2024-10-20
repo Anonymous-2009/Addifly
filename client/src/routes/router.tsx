@@ -9,6 +9,7 @@ import Get from '../pages/regular/Get';
 import Add from '../pages/regular/Add';
 import Delete from '../pages/regular/Delete';
 import Find from '../pages/regular/Find';
+import Update from '../pages/regular/Update';
 
 export const router = createBrowserRouter([
   {
@@ -47,6 +48,10 @@ export const router = createBrowserRouter([
       {
         path: 'find',
         element: <Find />,
+      },
+      {
+        path: 'update',
+        element: <Update />,
       },
     ],
   },
