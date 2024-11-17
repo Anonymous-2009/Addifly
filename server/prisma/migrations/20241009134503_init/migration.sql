@@ -1,4 +1,0 @@
--- CreateTable
-CREATE TABLE "User" (
-
-);

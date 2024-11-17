@@ -7,12 +7,12 @@ export default defineConfig({
   server: {
     proxy: {
       '/auth': {
-        target: 'http://localhost:3000', // Your backend server
+        target: 'http://server:3000', // Your backend server
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/auth/, '/auth'),
       },
       '/crud': {
-        target: 'http://localhost:3000', // Your backend server
+        target: 'http://server:3000', // Your backend server
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/crud/, '/crud'),
       },
