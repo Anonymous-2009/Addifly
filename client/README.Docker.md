@@ -15,12 +15,12 @@ A full-stack application with React frontend, Node.js backend, and PostgreSQL da
 
 ```bash
 # Clone the project repositories
-git clone https://github.com/anontmoys2009/addifly-client.git client
-git clone https://github.com/anontmoys2009/addifly-server.git server
+git clone https://github.com/anonymous2009/addifly-client.git client
+git clone https://github.com/anonymous2009/addifly-server.git server
 
 # For a specific branch
-git clone -b main https://github.com/anontmoys2009/addifly-client.git client
-git clone -b main https://github.com/anontmoys2009/addifly-server.git server
+git clone -b main https://github.com/anonymous2009/addifly-client.git client
+git clone -b main https://github.com/anonymous2009/addifly-server.git server
 ```
 
 ### 2. Pull Docker Images
@@ -29,10 +29,10 @@ Pull all required images from Docker Hub:
 
 ```bash
 # Pull the client image
-docker pull anontmoys2009/client:v1
+docker pull anonymous2009/client:v1
 
 # Pull the server image
-docker pull anontmoys2009/server:v1
+docker pull anonymous2009/server:v1
 
 # Pull PostgreSQL image
 docker pull postgres
@@ -103,7 +103,7 @@ docker run -d \
   --network=addifly \
   -p 3000:3000 \
   -e DATABASE_URL=postgresql://something:something@database:5432/something \
-  anontmoys2009/server:v1
+  anonymous2009/server:v1
 ```
 
 ### 7. Run Frontend Client
@@ -113,7 +113,7 @@ docker run -d \
   --name client \
   --network=addifly \
   -p 5173:5173 \
-  anontmoys2009/client:v1
+  anonymous2009/client:v1
 ```
 
 ## Quick Setup (All Commands)
@@ -122,12 +122,12 @@ Here's all commands in sequence to get the project running:
 
 ```bash
 # Clone repositories
-git clone https://github.com/anontmoys2009/addifly-client.git client
-git clone https://github.com/anontmoys2009/addifly-server.git server
+git clone https://github.com/anonymous2009/addifly-client.git client
+git clone https://github.com/anonymous2009/addifly-server.git server
 
 # Pull images
-docker pull anontmoys2009/client:v1
-docker pull anontmoys2009/server:v1
+docker pull anonymous2009/client:v1
+docker pull anonymous2009/server:v1
 docker pull postgres
 
 # Create network
@@ -152,14 +152,14 @@ docker run -d \
   --network=addifly \
   -p 3000:3000 \
   -e DATABASE_URL=postgresql://something:something@database:5432/something \
-  anontmoys2009/server:v1
+  anonymous2009/server:v1
 
 # Run client
 docker run -d \
   --name client \
   --network=addifly \
   -p 5173:5173 \
-  anontmoys2009/client:v1
+  anonymous2009/client:v1
 ```
 
 ## Local Development Setup
@@ -235,8 +235,8 @@ If you have issues cloning the repositories:
 2. Check if you have access to the repositories
 3. Try using SSH instead of HTTPS:
    ```bash
-   git clone git@github.com:anontmoys2009/addifly-client.git client
-   git clone git@github.com:anontmoys2009/addifly-server.git server
+   git clone git@github.com:anonymous2009/addifly-client.git client
+   git clone git@github.com:anonymous2009/addifly-server.git server
    ```
 
 ### Database Connection Issues
@@ -275,7 +275,7 @@ If you have issues pulling the images:
    ```
 2. Check if the images are accessible:
    ```bash
-   docker search anontmoys2009
+   docker search anonymous2009
    ```
 
 ## Data Persistence
@@ -309,8 +309,8 @@ docker network rm addifly
 docker volume rm addifly-data
 
 # Remove images (optional)
-docker rmi anontmoys2009/client:v1
-docker rmi anontmoys2009/server:v1
+docker rmi anonymous2009/client:v1
+docker rmi anonymous2009/server:v1
 docker rmi postgres
 
 # Remove cloned repositories (optional)
@@ -322,7 +322,7 @@ rm -rf client server
 - The database credentials used in this setup are for demonstration purposes. In a production environment, use secure credentials and store them safely.
 - Make sure ports 3000 and 5173 are available on your host machine.
 - The database volume ensures data persistence between container restarts.
-- Images are pulled from Docker Hub under the username `anontmoys2009`
+- Images are pulled from Docker Hub under the username `anonymous2009`
 
 ## Contributing
 
