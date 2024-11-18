@@ -1,0 +1,58 @@
+version: '3.9'
+
+services:
+  
+  postgres:
+    image: postgres:latest
+    container_name: database
+    restart: always
+    environment:
+      POSTGRES_USER: something
+      POSTGRES_PASSWORD: something 
+      POSTGRES_DB: something
+    ports:
+      - "5400:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U something"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - addifly-data:/var/lib/postgresql/data
+    networks:
+      - addifly
+
+  server:
+    build: 
+      context: .                                        # context means file path 
+      dockerfile: Dockerfile
+    # image: anonymous2009/server:latest
+    container_name: server
+    restart: always    
+    ports:
+      - 3000:3000
+    depends_on:
+      - postgres
+    networks:
+      - addifly
+
+  client:
+    build: 
+      context: ../client                                            # client:latest
+      dockerfile: Dockerfile
+    # image: anonymous2009/client:latest
+    container_name: client
+    restart: always    
+    ports:
+      - 5173:5173
+    depends_on:
+      - server
+    networks:
+      - addifly  
+
+networks:
+  addifly:
+    driver: bridge
+
+volumes:
+  addifly-data:
