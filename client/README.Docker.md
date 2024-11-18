@@ -29,10 +29,10 @@ Pull all required images from Docker Hub:
 
 ```bash
 # Pull the client image
-docker pull anonymous2009/client:v1
+docker pull anonymous2009/client:latest
 
 # Pull the server image
-docker pull anonymous2009/server:v1
+docker pull anonymous2009/server:latest
 
 # Pull PostgreSQL image
 docker pull postgres
@@ -103,7 +103,7 @@ docker run -d \
   --network=addifly \
   -p 3000:3000 \
   -e DATABASE_URL=postgresql://something:something@database:5432/something \
-  anonymous2009/server:v1
+  anonymous2009/server:latest
 ```
 
 ### 7. Run Frontend Client
@@ -113,7 +113,7 @@ docker run -d \
   --name client \
   --network=addifly \
   -p 5173:5173 \
-  anonymous2009/client:v1
+  anonymous2009/client:latest
 ```
 
 ## Quick Setup (All Commands)
@@ -126,8 +126,8 @@ git clone https://github.com/anonymous2009/addifly-client.git client
 git clone https://github.com/anonymous2009/addifly-server.git server
 
 # Pull images
-docker pull anonymous2009/client:v1
-docker pull anonymous2009/server:v1
+docker pull anonymous2009/client:latest
+docker pull anonymous2009/server:latest
 docker pull postgres
 
 # Create network
@@ -152,14 +152,14 @@ docker run -d \
   --network=addifly \
   -p 3000:3000 \
   -e DATABASE_URL=postgresql://something:something@database:5432/something \
-  anonymous2009/server:v1
+  anonymous2009/server:latest
 
 # Run client
 docker run -d \
   --name client \
   --network=addifly \
   -p 5173:5173 \
-  anonymous2009/client:v1
+  anonymous2009/client:latest
 ```
 
 ## Local Development Setup
@@ -309,8 +309,8 @@ docker network rm addifly
 docker volume rm addifly-data
 
 # Remove images (optional)
-docker rmi anonymous2009/client:v1
-docker rmi anonymous2009/server:v1
+docker rmi anonymous2009/client:latest
+docker rmi anonymous2009/server:latest
 docker rmi postgres
 
 # Remove cloned repositories (optional)
