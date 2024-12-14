@@ -14,6 +14,7 @@ import TestimonialCard from '../components/TestimonialCard';
 import { useNavigate } from 'react-router-dom';
 
 const Home: React.FC = () => {
+
   const navigate = useNavigate();
   return (
     <div className="bg-black min-h-screen text-white">

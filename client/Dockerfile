@@ -1,5 +1,5 @@
-# Take a base image of Node
-FROM node:latest
+# Base image for building
+FROM node:latest AS builder 
 
 # Initialize a working directory
 WORKDIR /home/addifly-client
@@ -13,8 +13,23 @@ RUN npm install
 # Copy the rest of the application code
 COPY . .
 
-# Expose the port the app runs on
-EXPOSE 5173
+# Build the project
+RUN npm run build 
+
+# Base image for running
+FROM node:latest AS runner 
+
+# Initialize a working directory
+WORKDIR /app
+
+# Copy build output and necessary files
+COPY --from=builder /home/addifly-client/dist ./dist
+COPY --from=builder /home/addifly-client/node_modules ./node_modules
+COPY --from=builder /home/addifly-client/package.json .
+COPY --from=builder /home/addifly-client/package-lock.json .
+
+# Expose ports
+EXPOSE 4173 5173
 
 # Start the application
-CMD [ "npm", "run", "dev" ]
+CMD ["npm", "run", "preview"]
